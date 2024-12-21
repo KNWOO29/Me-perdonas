@@ -64,20 +64,44 @@
         const noButton = document.querySelector('.no-btn');
         const popup = document.querySelector('.popup');
 
+        // Acción al pulsar "Sí"
         yesButton.addEventListener('click', () => {
             confetti.create(document.getElementById('confetti'), {
                 resize: true,
                 useWorker: true
             })({ particleCount: 200, spread: 70 });
-            popup.innerHTML = "<h2>¡Sabía que me preferías más que a su novia!</h2>";
+            popup.innerHTML = "<h2>¡Sabía que me preferías más que a tu novia!</h2>";
         });
 
+        // Acción al pulsar "No"
         noButton.addEventListener('click', () => {
-            const randomX = Math.random() * 300 + 'px';
-            const randomY = Math.random() * 300 + 'px';
-            popup.style.transform = `translate(${randomX}, ${randomY})`;
-            popup.innerHTML = "<h2>¡Sé que te confundiste! ¡No te preocupes!</h2>";
+            const randomX = Math.random() * 300 - 150 + 'px';
+            const randomY = Math.random() * 300 - 150 + 'px';
+            popup.style.transform = translate(${randomX}, ${randomY});
+
+            // Cambiar el contenido temporalmente
+            popup.innerHTML = `
+                <h2>¡Puedo explicarlo!</h2>
+                <button class="button try-again">Volver</button>
+            `;
+
+            // Restaurar los botones al pulsar "Volver"
+            document.querySelector('.try-again').addEventListener('click', () => {
+                popup.style.transform = 'translate(0, 0)';
+                popup.innerHTML = `
+                    <h2>¿Me perdonas?</h2>
+                    <button class="button yes-btn">Sí</button>
+                    <button class="button no-btn">No</button>
+                `;
+                attachEvents(); // Reasignar eventos a los botones
+            });
         });
+
+        // Función para reasignar eventos
+        function attachEvents() {
+            document.querySelector('.yes-btn').addEventListener('click', yesButton.click);
+            document.querySelector('.no-btn').addEventListener('click', noButton.click);
+        }
     </script>
 </body>
 </html>
