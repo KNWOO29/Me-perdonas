@@ -37,6 +37,7 @@
         .no-btn {
             background-color: red;
             color: white;
+            position: relative;
         }
         .confetti {
             position: absolute;
@@ -75,33 +76,15 @@
 
         // Acción al pulsar "No"
         noButton.addEventListener('click', () => {
-            const randomX = Math.random() * 300 - 150 + 'px';
-            const randomY = Math.random() * 300 - 150 + 'px';
-            popup.style.transform = translate(${randomX}, ${randomY});
+            // Generar nuevas coordenadas aleatorias
+            const randomX = Math.random() * (window.innerWidth - 100);
+            const randomY = Math.random() * (window.innerHeight - 100);
 
-            // Cambiar el contenido temporalmente
-            popup.innerHTML = `
-                <h2>¡Puedo explicarlo!</h2>
-                <button class="button try-again">Volver</button>
-            `;
-
-            // Restaurar los botones al pulsar "Volver"
-            document.querySelector('.try-again').addEventListener('click', () => {
-                popup.style.transform = 'translate(0, 0)';
-                popup.innerHTML = `
-                    <h2>¿Me perdonas?</h2>
-                    <button class="button yes-btn">Sí</button>
-                    <button class="button no-btn">No</button>
-                `;
-                attachEvents(); // Reasignar eventos a los botones
-            });
+            // Mover el botón "No"
+            noButton.style.position = 'absolute';
+            noButton.style.left = ${randomX}px;
+            noButton.style.top = ${randomY}px;
         });
-
-        // Función para reasignar eventos
-        function attachEvents() {
-            document.querySelector('.yes-btn').addEventListener('click', yesButton.click);
-            document.querySelector('.no-btn').addEventListener('click', noButton.click);
-        }
     </script>
 </body>
 </html>
